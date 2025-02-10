@@ -6,6 +6,12 @@ type Stack struct {
 	content []int
 }
 
+func New() Stack {
+	return Stack{
+		content: make([]int, 0),
+	}
+}
+
 func (s *Stack) Push(x int) {
 	s.content = append(s.content, x)
 }
