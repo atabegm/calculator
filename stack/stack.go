@@ -3,22 +3,22 @@ package stack
 import "fmt"
 
 type Stack struct {
-	content []int
+	content []string
 }
 
 func New() Stack {
 	return Stack{
-		content: make([]int, 0),
+		content: make([]string, 0),
 	}
 }
 
-func (s *Stack) Push(x int) {
+func (s *Stack) Push(x string) {
 	s.content = append(s.content, x)
 }
 
-func (s *Stack) Pop() (int, error) {
-	if s.empty() {
-		return 0, fmt.Errorf("empty stack")
+func (s *Stack) Pop() (string, error) {
+	if s.Empty() {
+		return "", fmt.Errorf("empty stack")
 	}
 
 	a := s.content[len(s.content)-1]
@@ -27,10 +27,14 @@ func (s *Stack) Pop() (int, error) {
 	return a, nil
 }
 
-func (s *Stack) Peek() int {
-	return s.content[len(s.content)-1]
+func (s *Stack) Peek() (string, error) {
+	if s.Empty() {
+		return "", fmt.Errorf("empty stack")
+	}
+
+	return s.content[len(s.content)-1], nil
 }
 
-func (s *Stack) empty() bool {
+func (s *Stack) Empty() bool {
 	return len(s.content) == 0
 }

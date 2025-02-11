@@ -7,6 +7,8 @@ import (
 	"slices"
 	"strconv"
 	"strings"
+
+	"github.com/atabegm/calculator/stack"
 )
 
 func beautyExpr(s string) string {
@@ -44,7 +46,7 @@ func convertToRpn(s string) ([]string, error) {
 		"/": 2,
 	}
 	rpn := make([]string, 0)
-	opStack := New()
+	opStack := stack.New()
 	for _, chunk := range sliceS {
 		if _, err := strconv.Atoi(chunk); err == nil {
 			rpn = append(rpn, chunk)
@@ -61,8 +63,6 @@ func convertToRpn(s string) ([]string, error) {
 						break
 					}
 				}
-			} else {
-				fmt.Println(chunk, err)
 			}
 			opStack.Push(chunk)
 		} else if chunk == "(" {
@@ -85,7 +85,7 @@ func convertToRpn(s string) ([]string, error) {
 
 	}
 
-	for !opStack.empty() {
+	for !opStack.Empty() {
 		x, _ := opStack.Pop()
 		rpn = append(rpn, x)
 	}
@@ -94,7 +94,7 @@ func convertToRpn(s string) ([]string, error) {
 }
 
 func calc(s []string) (float64, error) {
-	stack := New()
+	stack := stack.New()
 
 	for i := range s {
 		if _, err := strconv.ParseFloat(s[i], 64); err == nil {
